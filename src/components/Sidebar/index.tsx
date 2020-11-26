@@ -1,8 +1,14 @@
 import React from 'react';
 
-import { Chat, DonutLarge, MoreVert } from '@material-ui/icons';
+import { Chat, DonutLarge, MoreVert, Search } from '@material-ui/icons';
 
-import { Container, Header, HeaderButtons, Search, ChatList } from './styles';
+import {
+  Container,
+  Header,
+  HeaderButtons,
+  SearchInput,
+  ChatList,
+} from './styles';
 
 const Sidebar: React.FC = () => {
   return (
@@ -24,7 +30,15 @@ const Sidebar: React.FC = () => {
           </div>
         </HeaderButtons>
       </Header>
-      <Search>search</Search>
+      <SearchInput>
+        <div>
+          <Search fontSize="small" style={{ color: '#919191' }} />
+          <input
+            type="search"
+            placeholder="Procurar ou começar uma nova conversa"
+          />
+        </div>
+      </SearchInput>
       <ChatList>chatList</ChatList>
     </Container>
   );

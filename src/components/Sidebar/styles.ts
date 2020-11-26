@@ -36,6 +36,26 @@ export const HeaderButtons = styled.div`
     cursor: pointer;
   }
 `;
-export const Search = styled.div``;
+export const SearchInput = styled.div`
+  background-color: #f6f6f6;
+  border-bottom: 1px solid #eee;
+  padding: 5px 15px;
+
+  div {
+    background-color: #fff;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+
+    input {
+      flex: 1;
+      border: 0;
+      background-color: transparent;
+      margin-left: 10px;
+    }
+  }
+`;
 
 export const ChatList = styled.div``;
