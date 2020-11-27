@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Chat, DonutLarge, MoreVert, Search } from '@material-ui/icons';
 
@@ -9,8 +9,31 @@ import {
   SearchInput,
   ChatList,
 } from './styles';
+import ChatListItem from '../ChatListItem';
 
 const Sidebar: React.FC = () => {
+  const [chatList, setChatList] = useState([
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+  ]);
   return (
     <Container>
       <Header>
@@ -39,7 +62,11 @@ const Sidebar: React.FC = () => {
           />
         </div>
       </SearchInput>
-      <ChatList>chatList</ChatList>
+      <ChatList>
+        {chatList.map((item, key) => (
+          <ChatListItem key={String(key)} />
+        ))}
+      </ChatList>
     </Container>
   );
 };

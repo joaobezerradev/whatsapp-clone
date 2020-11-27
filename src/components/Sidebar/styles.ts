@@ -15,7 +15,7 @@ export const Header = styled.div`
   align-items: center;
   padding: 0 15px;
 
-  img {
+  > img {
     width: 40px;
     height: 40px;
     border-radius: 20px;
@@ -26,7 +26,7 @@ export const Header = styled.div`
 export const HeaderButtons = styled.div`
   display: flex;
 
-  div {
+  > div {
     width: 40px;
     height: 40px;
     border-radius: 20px;
@@ -36,12 +36,13 @@ export const HeaderButtons = styled.div`
     cursor: pointer;
   }
 `;
+
 export const SearchInput = styled.div`
   background-color: #f6f6f6;
   border-bottom: 1px solid #eee;
   padding: 5px 15px;
 
-  div {
+  > div {
     background-color: #fff;
     height: 40px;
     border-radius: 20px;
@@ -49,7 +50,7 @@ export const SearchInput = styled.div`
     align-items: center;
     padding: 0 10px;
 
-    input {
+    > input {
       flex: 1;
       border: 0;
       background-color: transparent;
@@ -58,4 +59,17 @@ export const SearchInput = styled.div`
   }
 `;
 
-export const ChatList = styled.div``;
+export const ChatList = styled.div`
+  flex: 1;
+  background-color: #fff;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+`;
