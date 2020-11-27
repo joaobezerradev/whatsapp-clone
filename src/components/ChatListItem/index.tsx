@@ -2,26 +2,25 @@ import React from 'react';
 
 import { Container, Lines, Name, Date, LastMessage } from './styles';
 
-const ChatListItem: React.FC = () => {
+interface ChatListItemProps {
+  onClick: VoidFunction;
+}
+
+const ChatListItem: React.FC<ChatListItemProps> = ({ onClick }) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <img
-        src="https://avatars1.githubusercontent.com/u/54491980?s=460&u=5457192f7674845b14a107f7791033cfcbabb036&v=4"
+        src="https://instagram.fjpa8-1.fna.fbcdn.net/v/t51.2885-19/s150x150/120133369_321880132251910_4613029532289345176_n.jpg?_nc_ht=instagram.fjpa8-1.fna.fbcdn.net&_nc_ohc=DiN2xnORwXgAX_y59R2&tp=1&oh=254b09951ce69da9b9d6e2e9fcf8b108&oe=5FE8CEAE"
         alt="foto"
       />
       <Lines>
         <div>
-          <Name>Daniel Gomes</Name>
+          <Name>Meu BB</Name>
           <Date>20:00</Date>
         </div>
         <div>
           <LastMessage>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum
-              rerum, voluptas ratione pariatur deserunt repellendus fugit
-              quaerat mollitia hic nostrum, est autem consectetur consequatur
-              adipisci alias aliquam. Minima, fuga sapiente!
-            </p>
+            <p>Te amo besta ♥</p>
           </LastMessage>
         </div>
       </Lines>
