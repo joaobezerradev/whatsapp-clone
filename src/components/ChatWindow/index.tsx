@@ -1,21 +1,47 @@
+import { AttachFile, Search, MoreVert } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 import { Chat, useChat } from '../../hooks/chat';
 
-import { Container } from './styles';
+import {
+  Container,
+  Header,
+  Body,
+  Footer,
+  HeaderInfo,
+  HeaderButtons,
+} from './styles';
 
 const ChatWindow: React.FC = () => {
   const [chat, setChat] = useState<Chat>();
-  const { getActiveChat } = useChat();
+  const { activeChat } = useChat();
 
   useEffect(() => {
-    const activeChat = getActiveChat();
     if (activeChat) {
       setChat(activeChat);
     }
-  }, [getActiveChat]);
+  }, [activeChat]);
   return (
     <Container>
-      <div>{chat?.id}</div>
+      <Header>
+        <HeaderInfo>
+          <img src={chat?.avatar} alt={chat?.name} />
+          <div>{chat?.name}</div>
+        </HeaderInfo>
+
+        <HeaderButtons>
+          <div>
+            <Search style={{ color: '#919191' }} />
+          </div>
+          <div>
+            <AttachFile style={{ color: '#919191' }} />
+          </div>
+          <div>
+            <MoreVert style={{ color: '#919191' }} />
+          </div>
+        </HeaderButtons>
+      </Header>
+      <Body>...</Body>
+      <Footer>...</Footer>
     </Container>
   );
 };

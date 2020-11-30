@@ -2,13 +2,13 @@ import React, { createContext, useCallback, useContext, useState } from 'react';
 
 export interface Chat {
   id: number;
-  title: string;
-  image: string;
+  name: string;
+  avatar: string;
 }
 
 interface ChatContextData {
   setActiveChat(data: Chat): void;
-  getActiveChat(): Chat | undefined;
+  activeChat: Chat | undefined;
 }
 
 const ChatContext = createContext<ChatContextData>({} as ChatContextData);
@@ -20,12 +20,10 @@ const ChatProvider: React.FC = ({ children }) => {
     setChat(data);
   }, []);
 
-  const getActiveChat = useCallback(() => {
-    return chat;
-  }, [chat]);
+  const activeChat = chat;
 
   return (
-    <ChatContext.Provider value={{ setActiveChat, getActiveChat }}>
+    <ChatContext.Provider value={{ setActiveChat, activeChat }}>
       {children}
     </ChatContext.Provider>
   );

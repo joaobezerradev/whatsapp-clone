@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+  active: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   display: flex;
   cursor: pointer;
   align-items: center;
@@ -12,6 +16,12 @@ export const Container = styled.div`
     border-radius: 50%;
     margin-left: 15px;
   }
+
+  ${props =>
+    props.active &&
+    css`
+      background-color: #ebebeb;
+    `}
 
   &:hover {
     background-color: #f5f5f5;

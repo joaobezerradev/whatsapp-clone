@@ -7,6 +7,9 @@ import {
   Search,
 } from '@material-ui/icons';
 
+import ChatListItem from '../ChatListItem';
+import { Chat, useChat } from '../../hooks/chat';
+
 import {
   Container,
   Header,
@@ -14,37 +17,18 @@ import {
   SearchInput,
   ChatList,
 } from './styles';
-import ChatListItem from '../ChatListItem';
-import { Chat, useChat } from '../../hooks/chat';
 
 const Sidebar: React.FC = () => {
   const [chatList, setChatList] = useState<Chat[]>([
     {
       id: 1,
-      title: 'Meu BB',
-      image:
-        'https://avatars3.githubusercontent.com/u/48421122?s=460&u=35c476efc7f477bf0adcf23bb9f8d4a7e73148e4&v=4',
-    },
-    {
-      id: 2,
-      title: 'Meu BB',
-      image:
-        'https://avatars3.githubusercontent.com/u/48421122?s=460&u=35c476efc7f477bf0adcf23bb9f8d4a7e73148e4&v=4',
-    },
-    {
-      id: 3,
-      title: 'Meu BB',
-      image:
-        'https://avatars3.githubusercontent.com/u/48421122?s=460&u=35c476efc7f477bf0adcf23bb9f8d4a7e73148e4&v=4',
-    },
-    {
-      id: 4,
-      title: 'Meu BB',
-      image:
-        'https://avatars3.githubusercontent.com/u/48421122?s=460&u=35c476efc7f477bf0adcf23bb9f8d4a7e73148e4&v=4',
+      name: 'Meu BB',
+      avatar:
+        'https://instagram.fjpa8-1.fna.fbcdn.net/v/t51.2885-19/s150x150/120133369_321880132251910_4613029532289345176_n.jpg?_nc_ht=instagram.fjpa8-1.fna.fbcdn.net&_nc_ohc=DiN2xnORwXgAX_y59R2&tp=1&oh=254b09951ce69da9b9d6e2e9fcf8b108&oe=5FE8CEAE',
     },
   ]);
-  const { setActiveChat } = useChat();
+  const { setActiveChat, activeChat } = useChat();
+
   return (
     <Container>
       <Header>
@@ -77,6 +61,8 @@ const Sidebar: React.FC = () => {
         {chatList.map((item, key) => (
           <ChatListItem
             key={String(key)}
+            data={item}
+            active={activeChat?.id === chatList[key].id}
             onClick={() => setActiveChat(chatList[key])}
           />
         ))}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useChat } from '../../hooks/chat';
 import ChatIntro from '../ChatIntro';
 import ChatWindow from '../ChatWindow';
@@ -6,10 +6,9 @@ import ChatWindow from '../ChatWindow';
 import { Container } from './styles';
 
 const ContentArea: React.FC = () => {
-  const { getActiveChat, setActiveChat } = useChat();
-  const chat = getActiveChat();
+  const { activeChat } = useChat();
 
-  return <Container>{chat ? <ChatWindow /> : <ChatIntro />}</Container>;
+  return <Container>{activeChat ? <ChatWindow /> : <ChatIntro />}</Container>;
 };
 
 export default ContentArea;
