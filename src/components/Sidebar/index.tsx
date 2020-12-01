@@ -22,9 +22,9 @@ const Sidebar: React.FC = () => {
   const [chatList, setChatList] = useState<Chat[]>([
     {
       id: 1,
-      name: 'Meu BB',
+      name: 'Marcelo Estevam',
       avatar:
-        'https://instagram.fjpa8-1.fna.fbcdn.net/v/t51.2885-19/s150x150/120133369_321880132251910_4613029532289345176_n.jpg?_nc_ht=instagram.fjpa8-1.fna.fbcdn.net&_nc_ohc=DiN2xnORwXgAX_y59R2&tp=1&oh=254b09951ce69da9b9d6e2e9fcf8b108&oe=5FE8CEAE',
+        'https://instagram.fjpa1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/105966611_3070014389750111_7135244264715933822_n.jpg?_nc_ht=instagram.fjpa1-1.fna.fbcdn.net&_nc_ohc=bPHwTCmOXrQAX_0QFvh&tp=1&oh=ce47939f1a269a32cd0d6a25abffc89b&oe=5FEFD59A',
     },
   ]);
   const { setActiveChat, activeChat } = useChat();

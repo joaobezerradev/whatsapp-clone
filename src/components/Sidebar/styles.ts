@@ -40,11 +40,11 @@ export const HeaderButtons = styled.div`
 export const SearchInput = styled.div`
   background-color: #f6f6f6;
   border-bottom: 1px solid #eee;
-  padding: 5px 15px;
+  padding: 10px 15px;
 
   > div {
     background-color: #fff;
-    height: 40px;
+    height: 35px;
     border-radius: 20px;
     display: flex;
     align-items: center;

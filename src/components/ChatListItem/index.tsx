@@ -24,7 +24,7 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
         </div>
         <div>
           <LastMessage>
-            <p>Te amo besta ♥</p>
+            <p>Valeu cara</p>
           </LastMessage>
         </div>
       </Lines>
