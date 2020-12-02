@@ -17,8 +17,10 @@ import {
   SearchInput,
   ChatList,
 } from './styles';
+import NewChat from '../NewChat';
 
 const Sidebar: React.FC = () => {
+  const [show, setShow] = useState(false);
   const [chatList, setChatList] = useState<Chat[]>([
     {
       id: 1,
@@ -31,21 +33,22 @@ const Sidebar: React.FC = () => {
 
   return (
     <Container>
+      <NewChat show={show} setShow={setShow} />
       <Header>
         <img
           alt="profile"
           src="https://avatars3.githubusercontent.com/u/48421122?s=460&u=35c476efc7f477bf0adcf23bb9f8d4a7e73148e4&v=4"
         />
         <HeaderButtons>
-          <div>
+          <button type="button">
             <DonutLarge style={{ color: '#919191' }} />
-          </div>
-          <div>
+          </button>
+          <button type="button" onClick={() => setShow(true)}>
             <ChatIcon style={{ color: '#919191' }} />
-          </div>
-          <div>
+          </button>
+          <button type="button">
             <MoreVert style={{ color: '#919191' }} />
-          </div>
+          </button>
         </HeaderButtons>
       </Header>
       <SearchInput>

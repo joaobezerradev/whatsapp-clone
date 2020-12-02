@@ -26,13 +26,15 @@ export const Header = styled.div`
 export const HeaderButtons = styled.div`
   display: flex;
 
-  > div {
+  > button {
     width: 40px;
     height: 40px;
     border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 0;
+    background-color: transparent;
     cursor: pointer;
   }
 `;

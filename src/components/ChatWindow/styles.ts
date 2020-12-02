@@ -59,6 +59,17 @@ export const Body = styled.div`
   background-size: cover;
   background-position: top;
   background-image: url(${chatBg});
+
+  padding: 20px 30px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 `;
 export const Footer = styled.div`
   height: 62px;

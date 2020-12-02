@@ -8,8 +8,9 @@ import {
   Mic,
 } from '@material-ui/icons';
 import EmojiPicker, { IEmojiData } from 'emoji-picker-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Chat, useChat } from '../../hooks/chat';
+import MessageItem from '../MessageItem';
 
 import {
   Container,
@@ -24,11 +25,109 @@ import {
   EmojiArea,
 } from './styles';
 
+interface ListProps {
+  author: string;
+  message: string;
+}
+
 const ChatWindow: React.FC = () => {
   const [message, setMessage] = useState('');
+  const [list, setList] = useState<ListProps[]>([
+    {
+      author: 'Maria',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+    {
+      author: 'Joao',
+      message:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
+    },
+  ]);
   const [chat, setChat] = useState<Chat>();
   const [openEmoji, setOpenEmoji] = useState(false);
   const [listening, setListening] = useState(false);
+  const chatRef = useRef<HTMLDivElement>(null);
   const { activeChat } = useChat();
 
   const handleEmoji = (_: MouseEvent, { emoji }: IEmojiData): void => {
@@ -64,6 +163,14 @@ const ChatWindow: React.FC = () => {
       setChat(activeChat);
     }
   }, [activeChat]);
+  useEffect(() => {
+    if (chatRef.current?.scrollHeight && chatRef.current.offsetHeight) {
+      if (chatRef.current.scrollHeight > chatRef.current.offsetHeight) {
+        chatRef.current.scrollTop =
+          chatRef.current.scrollHeight - chatRef.current.offsetHeight;
+      }
+    }
+  }, [list]);
   return (
     <Container>
       <Header>
@@ -84,7 +191,11 @@ const ChatWindow: React.FC = () => {
           </div>
         </HeaderButtons>
       </Header>
-      <Body />
+      <Body ref={chatRef}>
+        {list.map((item, key) => (
+          <MessageItem key={key} data={item} />
+        ))}
+      </Body>
       <EmojiArea style={{ height: openEmoji ? '200px' : '0px' }}>
         <EmojiPicker
           onEmojiClick={handleEmoji}
