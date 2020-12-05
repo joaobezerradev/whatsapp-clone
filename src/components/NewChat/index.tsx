@@ -1,7 +1,11 @@
 import { ArrowBack } from '@material-ui/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Container, Head, List } from './styles';
+
+import api, { UserCollection } from '../../services/api';
+import { useAuth } from '../../hooks/auth';
+import { useChat } from '../../hooks/chat';
 
 interface NewChatProps {
   show: boolean;
@@ -9,27 +13,23 @@ interface NewChatProps {
 }
 
 const NewChat: React.FC<NewChatProps> = ({ show, setShow }) => {
-  const [contacts, setContacts] = useState([
-    {
-      id: 123,
-      avatar:
-        'https://thumbs.dreamstime.com/b/opte-pelo-avatar-placeholder-da-foto-%C3%ADcone-do-perfil-124557887.jpg',
-      name: 'Joao Vitor',
-    },
-    {
-      id: 123,
-      avatar:
-        'https://thumbs.dreamstime.com/b/opte-pelo-avatar-placeholder-da-foto-%C3%ADcone-do-perfil-124557887.jpg',
-      name: 'Joao Vitor',
-    },
-    {
-      id: 123,
-      avatar:
-        'https://thumbs.dreamstime.com/b/opte-pelo-avatar-placeholder-da-foto-%C3%ADcone-do-perfil-124557887.jpg',
-      name: 'Joao Vitor',
-    },
-  ]);
+  const [contacts, setContacts] = useState<UserCollection[]>([]);
+  const { user } = useAuth();
+  const { setActiveChat } = useChat();
 
+  useEffect(() => {
+    const loadContacts = async (): Promise<void> => {
+      const response = await api.getContactList(user.id);
+      setContacts(response);
+    };
+    loadContacts();
+  }, [user.id]);
+
+  const addNewChat = async (contact: UserCollection): Promise<void> => {
+    await api.addNewChat(contact, user);
+    setShow(false);
+    setActiveChat(contact);
+  };
   return (
     <Container style={{ left: show ? 0 : -415 }}>
       <Head>
@@ -39,11 +39,15 @@ const NewChat: React.FC<NewChatProps> = ({ show, setShow }) => {
         <span>Nova conversa</span>
       </Head>
       <List>
-        {contacts.map((contact, key) => (
-          <div key={key}>
+        {contacts.map(contact => (
+          <button
+            key={contact.id}
+            type="button"
+            onClick={() => addNewChat(contact)}
+          >
             <img src={contact.avatar} alt={contact.name} />
             <span>{contact.name}</span>
-          </div>
+          </button>
         ))}
       </List>
     </Container>

@@ -52,11 +52,14 @@ export const List = styled.div`
     background-color: rgba(0, 0, 0, 0.2);
   }
 
-  div {
+  button {
     display: flex;
+    width: 100%;
     align-items: center;
     padding: 15px;
     cursor: pointer;
+    border: 0;
+    background-color: transparent;
 
     &:hover {
       background-color: #f5f5f5;
@@ -70,7 +73,7 @@ export const List = styled.div`
     }
 
     span {
-      font-size: 17;
+      font-size: 17px;
       color: #000;
     }
   }

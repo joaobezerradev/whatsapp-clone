@@ -71,7 +71,7 @@ export const Body = styled.div`
     background-color: rgba(0, 0, 0, 0.2);
   }
 `;
-export const Footer = styled.div`
+export const Footer = styled.form`
   height: 62px;
 
   display: flex;

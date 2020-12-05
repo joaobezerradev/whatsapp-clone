@@ -1,19 +1,23 @@
 import React from 'react';
+import { useAuth } from '../../hooks/auth';
 import { Container, MessageText, MessageDate } from './styles';
 
 interface MessageProps {
   data: {
-    message: string;
     author: string;
+    content: string;
+    type: string;
+    date: string;
   };
 }
 
 const MessageItem: React.FC<MessageProps> = ({ data }) => {
+  const { user } = useAuth();
   return (
-    <Container>
+    <Container author={user.id === data.author}>
       <div>
-        <MessageText>{data.message}</MessageText>
-        <MessageDate>19:00</MessageDate>
+        <MessageText>{data.content}</MessageText>
+        <MessageDate>{data.date}</MessageDate>
       </div>
     </Container>
   );

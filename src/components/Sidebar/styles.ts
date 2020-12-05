@@ -15,11 +15,16 @@ export const Header = styled.div`
   align-items: center;
   padding: 0 15px;
 
-  > img {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    cursor: pointer;
+  button {
+    background-color: transparent;
+    border: 0;
+
+    > img {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
   }
 `;
 

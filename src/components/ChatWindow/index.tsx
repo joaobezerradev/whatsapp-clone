@@ -8,8 +8,10 @@ import {
   Mic,
 } from '@material-ui/icons';
 import EmojiPicker, { IEmojiData } from 'emoji-picker-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import { useAuth } from '../../hooks/auth';
 import { Chat, useChat } from '../../hooks/chat';
+import api from '../../services/api';
 import MessageItem from '../MessageItem';
 
 import {
@@ -27,108 +29,33 @@ import {
 
 interface ListProps {
   author: string;
-  message: string;
+  content: string;
+  type: string;
+  date: string;
 }
 
 const ChatWindow: React.FC = () => {
+  const { activeChat } = useChat();
+  const { user } = useAuth();
   const [message, setMessage] = useState('');
-  const [list, setList] = useState<ListProps[]>([
-    {
-      author: 'Maria',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-    {
-      author: 'Joao',
-      message:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaera placeat, sint illo praesentium doloremque, quas suscipit dolorem exest magnam in nihil? Modi, nostrum consequuntur ipsum dignissimos ab placeat? Architecto.',
-    },
-  ]);
-  const [chat, setChat] = useState<Chat>();
+  const [list, setList] = useState<ListProps[]>([]);
   const [openEmoji, setOpenEmoji] = useState(false);
   const [listening, setListening] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
-  const { activeChat } = useChat();
+
+  useEffect(() => {
+    if (activeChat) {
+      api.onChatContent(activeChat?.id, setList);
+    }
+  }, [activeChat]);
+  useEffect(() => {
+    if (chatRef.current?.scrollHeight && chatRef.current.offsetHeight) {
+      if (chatRef.current.scrollHeight > chatRef.current.offsetHeight) {
+        chatRef.current.scrollTop =
+          chatRef.current.scrollHeight - chatRef.current.offsetHeight;
+      }
+    }
+  }, [list]);
 
   const handleEmoji = (_: MouseEvent, { emoji }: IEmojiData): void => {
     setMessage(`${message}${emoji}`);
@@ -158,25 +85,22 @@ const ChatWindow: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (activeChat) {
-      setChat(activeChat);
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+
+    if (message !== '') {
+      api.sendMessage(activeChat as Chat, user, message);
+      setMessage('');
+      setOpenEmoji(false);
     }
-  }, [activeChat]);
-  useEffect(() => {
-    if (chatRef.current?.scrollHeight && chatRef.current.offsetHeight) {
-      if (chatRef.current.scrollHeight > chatRef.current.offsetHeight) {
-        chatRef.current.scrollTop =
-          chatRef.current.scrollHeight - chatRef.current.offsetHeight;
-      }
-    }
-  }, [list]);
+  };
+
   return (
     <Container>
       <Header>
         <HeaderInfo>
-          <img src={chat?.avatar} alt={chat?.name} />
-          <div>{chat?.name}</div>
+          <img src={activeChat?.avatar} alt={activeChat?.name} />
+          <div>{activeChat?.name}</div>
         </HeaderInfo>
 
         <HeaderButtons>
@@ -203,7 +127,7 @@ const ChatWindow: React.FC = () => {
           disableSkinTonePicker
         />
       </EmojiArea>
-      <Footer>
+      <Footer onSubmit={handleSubmit}>
         <FooterPre>
           <button
             type="button"
@@ -232,7 +156,7 @@ const ChatWindow: React.FC = () => {
               <Mic style={{ color: listening ? '#126ece' : '#919191' }} />
             </button>
           ) : (
-            <button type="button">
+            <button type="submit">
               <Send style={{ color: '#919191' }} />
             </button>
           )}

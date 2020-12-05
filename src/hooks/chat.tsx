@@ -1,9 +1,12 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
 
 export interface Chat {
-  id: number;
+  id: string;
   name: string;
   avatar: string;
+  with?: string;
+  lastMessage?: string;
+  lastMessageDate?: string;
 }
 
 interface ChatContextData {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chat } from '../../hooks/chat';
 
-import { Container, Lines, Name, Date, LastMessage } from './styles';
+import { Container, Lines, Name, Date as Data, LastMessage } from './styles';
 
 interface ChatListItemProps {
   onClick: VoidFunction;
@@ -20,11 +20,11 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
       <Lines>
         <div>
           <Name>{data.name}</Name>
-          <Date>20:00</Date>
+          <Data>{data.lastMessageDate}</Data>
         </div>
         <div>
           <LastMessage>
-            <p>Valeu cara</p>
+            <p>{data.lastMessage}</p>
           </LastMessage>
         </div>
       </Lines>

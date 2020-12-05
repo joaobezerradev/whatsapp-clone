@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Chat as ChatIcon,
@@ -18,27 +18,27 @@ import {
   ChatList,
 } from './styles';
 import NewChat from '../NewChat';
+import { useAuth } from '../../hooks/auth';
+import api from '../../services/api';
 
 const Sidebar: React.FC = () => {
+  const { user, signOut } = useAuth();
   const [show, setShow] = useState(false);
-  const [chatList, setChatList] = useState<Chat[]>([
-    {
-      id: 1,
-      name: 'Marcelo Estevam',
-      avatar:
-        'https://instagram.fjpa1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/105966611_3070014389750111_7135244264715933822_n.jpg?_nc_ht=instagram.fjpa1-1.fna.fbcdn.net&_nc_ohc=bPHwTCmOXrQAX_0QFvh&tp=1&oh=ce47939f1a269a32cd0d6a25abffc89b&oe=5FEFD59A',
-    },
-  ]);
+  const [chatList, setChatList] = useState<Chat[]>([]);
   const { setActiveChat, activeChat } = useChat();
+
+  useEffect(() => {
+    return api.onChatList({ userId: user.id, setChatList });
+  }, [user]);
 
   return (
     <Container>
       <NewChat show={show} setShow={setShow} />
       <Header>
-        <img
-          alt="profile"
-          src="https://avatars3.githubusercontent.com/u/48421122?s=460&u=35c476efc7f477bf0adcf23bb9f8d4a7e73148e4&v=4"
-        />
+        <button type="button" onClick={signOut}>
+          <img alt={user.avatar} src={user.avatar} />
+        </button>
+
         <HeaderButtons>
           <button type="button">
             <DonutLarge style={{ color: '#919191' }} />
@@ -61,12 +61,12 @@ const Sidebar: React.FC = () => {
         </div>
       </SearchInput>
       <ChatList>
-        {chatList.map((item, key) => (
+        {chatList.map(item => (
           <ChatListItem
-            key={String(key)}
+            key={item.id}
             data={item}
-            active={activeChat?.id === chatList[key].id}
-            onClick={() => setActiveChat(chatList[key])}
+            active={activeChat?.id === item.id}
+            onClick={() => setActiveChat(item)}
           />
         ))}
       </ChatList>

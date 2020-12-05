@@ -1,12 +1,29 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+  author: boolean;
+}
+export const Container = styled.div<ContainerProps>`
   margin-bottom: 10px;
 
   display: flex;
 
+  ${props =>
+    props.author &&
+    css`
+      justify-content: flex-end;
+    `}
+
   > div {
-    background-color: #fff;
+    ${props =>
+      props.author
+        ? css`
+            background-color: #dcf8c6;
+          `
+        : css`
+            background-color: #fff;
+          `}
+
     border-radius: 10px;
     box-shadow: 0 1px 1px #ccc;
     padding: 3px;
